@@ -52,27 +52,27 @@ document.addEventListener("DOMContentLoaded", function() {
         jokeDisplay.textContent = joke;
     });
 });
-function isStrongPassword(password) {
+function isStrongPassword(password) 
+{
     
-    if (password.length < 8) {
+    if (password.length < 8) 
+        {
         return false;
-    }
-
-    // Cannot contain the word "password"
-    if (password.toLowerCase().includes("password")) {
+        }
+    if (password.toLowerCase().includes("password")) 
+        {
         return false;
-    }
-
-    // Must have at least one uppercase letter
-    if (!/[A-Z]/.test(password)) {
+        }
+    if (!/[A-Z]/.test(password)) 
+        {
         return false;
-    }
+        }
 
-    // All conditions passed
+
     return true;
 }
 
-// Wait until DOM is loaded before attaching listener to login button
+
 document.addEventListener("DOMContentLoaded", function() {
     const loginButton = document.getElementById("login-button");
 
