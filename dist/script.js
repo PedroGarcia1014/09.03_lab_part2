@@ -3,8 +3,7 @@
 function sayHello() {
     alert("Hello, world from javascript!");
 }
-// This function will be called when the link is clicked
-// It shows an alert with a message
+
 // Ensure the DOM is fully loaded before attaching the event listener
 document.addEventListener("DOMContentLoaded", function() {
     const link = document.getElementById("hello-link");
@@ -18,6 +17,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 });
 
+// Fetch a random Dad Joke from an API
 async function getRandomJoke() {
     return fetch('https://icanhazdadjoke.com/', {
         headers: {
@@ -35,7 +35,6 @@ async function getRandomJoke() {
         return "Failed to fetch a joke. Please try again later.";
     });
 }
-
 document.addEventListener("DOMContentLoaded", function() {
     const jokeButton = document.getElementById("joke-button");
     if (!jokeButton) {
@@ -43,14 +42,58 @@ document.addEventListener("DOMContentLoaded", function() {
         return;
     }
     jokeButton.addEventListener("click", async function() {
+        const jokeDisplay = document.getElementById("joke-display");
+        if (!jokeDisplay) {
+            console.error("Element with ID 'joke-display' not found.");
+            return;
+        }
+        jokeDisplay.textContent = "Loading joke...";
+        const joke = await getRandomJoke();
+        jokeDisplay.textContent = joke;
+    });
+});
+function isStrongPassword(password) {
+    
+    if (password.length < 8) {
+        return false;
+    }
 
-            const jokeDisplay = document.getElementById("joke-display");
-            if (!jokeDisplay) {
-                console.error("Element with ID 'joke-display' not found.");
-                return;
-            }
-            jokeDisplay.textContent = "Loading joke...";
-            const joke = await getRandomJoke();
-            jokeDisplay.textContent = joke;
+    // Cannot contain the word "password"
+    if (password.toLowerCase().includes("password")) {
+        return false;
+    }
+
+    // Must have at least one uppercase letter
+    if (!/[A-Z]/.test(password)) {
+        return false;
+    }
+
+    // All conditions passed
+    return true;
+}
+
+// Wait until DOM is loaded before attaching listener to login button
+document.addEventListener("DOMContentLoaded", function() {
+    const loginButton = document.getElementById("login-button");
+
+    if (!loginButton) {
+        console.warn("Login button not found — skipping password check setup.");
+        return;
+    }
+
+    loginButton.addEventListener("click", function() {
+        const passwordInput = document.getElementById("password");
+        if (!passwordInput) {
+            alert("Password input not found!");
+            return;
+        }
+
+        const password = passwordInput.value.trim();
+
+        if (isStrongPassword(password)) {
+            alert("Password is strong");
+        } else {
+            alert("Password is weak");
+        }
     });
 });
